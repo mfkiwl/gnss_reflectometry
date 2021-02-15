@@ -1,5 +1,5 @@
 import datetime
-import pandas
+import pandas as pd
 
 
 class Ephemerides:
@@ -33,19 +33,20 @@ class Sp3(Ephemerides):
                     data.append([time, line[0], line[1], line[2], line[3], line[4]])
                     line = file.readline()
 
-        self.data = data
+        self.data = pd.DataFrame(data, columns=['data', 'sat', 'x', 'y', 'z', 't'])
 
     def print_data(self):
         for i in self.data:
             print(i)
 
-    def getXYZ_in_time(self, time):
-        pass
+    def getXYZ_in_time(self, sat, time):
+        print(self.data[self.data["sat"] == sat])
 
 
 eph = Sp3('data/test.sp3')
 eph.parse_sp3()
-eph.print_data()
-
+eph.getXYZ_in_time('PC01',0)
+#eph.print_data()
+#print(eph.data)
 
 
